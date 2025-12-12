@@ -47,21 +47,39 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        text: {
+          primary: "hsl(var(--text-primary))",
+          secondary: "hsl(var(--text-secondary))",
+          tertiary: "hsl(var(--text-tertiary))",
+        },
+        neutral: {
+          20: "hsl(var(--neutral-20))",
+          50: "hsl(var(--neutral-50))",
+          border: "hsl(var(--neutral-border))",
+          color: "hsl(var(--neutral-color))",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xs: "var(--radius-xs)",
+      },
+      fontFamily: {
+        sans: [
+          'Pretendard Variable',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
+      },
+      boxShadow: {
+        'modal': '0 2px 8px -2px rgba(50, 56, 62, 0.08), 0 20px 24px -4px rgba(50, 56, 62, 0.08)',
+        'header': '0 -1px 0 0 rgba(97, 117, 134, 0.20) inset',
       },
       keyframes: {
         "accordion-down": {
