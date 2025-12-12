@@ -67,19 +67,20 @@ export default {
       },
       fontFamily: {
         sans: [
-          'Pretendard Variable',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
-          'Helvetica Neue',
-          'Arial',
-          'sans-serif',
+          "Pretendard Variable",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
         ],
       },
       boxShadow: {
-        'modal': '0 2px 8px -2px rgba(50, 56, 62, 0.08), 0 20px 24px -4px rgba(50, 56, 62, 0.08)',
-        'header': '0 -1px 0 0 rgba(97, 117, 134, 0.20) inset',
+        modal:
+          "0 2px 8px -2px rgba(50, 56, 62, 0.08), 0 20px 24px -4px rgba(50, 56, 62, 0.08)",
+        header: "0 -1px 0 0 rgba(97, 117, 134, 0.20) inset",
       },
       keyframes: {
         "accordion-down": {
