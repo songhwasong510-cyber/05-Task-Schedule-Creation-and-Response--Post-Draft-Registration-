@@ -1,293 +1,318 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>일정 생성 확인</title>
-    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            background-color: #f1f5f9;
-            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        background-color: #f1f5f9;
+        font-family:
+          "Pretendard Variable",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
 
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            min-height: 100vh;
-        }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        min-height: 100vh;
+      }
 
+      .modal {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 600px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow:
+          0 2px 8px -2px rgba(50, 56, 62, 0.08),
+          0 20px 24px -4px rgba(50, 56, 62, 0.08);
+        overflow: hidden;
+      }
+
+      .modal-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(97, 117, 134, 0.2);
+        box-shadow: 0 -1px 0 0 rgba(97, 117, 134, 0.2) inset;
+      }
+
+      .modal-title {
+        color: #0f172b;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.66;
+        margin: 0;
+        padding: 0;
+      }
+
+      .modal-subtitle {
+        color: #45556c;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42;
+        margin-top: 0.25rem;
+        padding: 0;
+      }
+
+      .modal-content {
+        flex: 1;
+        padding: 1.25rem 1.5rem;
+      }
+
+      .modal-body {
+        border: 1px solid #f1f5f9;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .content-row {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .content-label {
+        width: 144px;
+        flex-shrink: 0;
+        color: #314158;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.42;
+        padding: 0;
+      }
+
+      .content-value {
+        flex: 1;
+        color: #0f172b;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42;
+        white-space: pre-line;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .modal-footer {
+        padding: 0.875rem 1.5rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: #ffffff;
+        border-top: 1px solid #cad5e2;
+      }
+
+      .btn {
+        min-height: 40px;
+        padding: 0.25rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.42;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        font-family:
+          "Pretendard Variable",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+
+      .btn-outlined {
+        border: 1px solid #cad5e2;
+        background-color: #ffffff;
+        color: #1d293d;
+      }
+
+      .btn-outlined:hover {
+        background-color: #f8fafc;
+      }
+
+      .btn-outlined:active {
+        background-color: #f1f5f9;
+      }
+
+      .btn-primary {
+        background-color: #1447e6;
+        color: #ffffff;
+      }
+
+      .btn-primary:hover {
+        opacity: 0.9;
+      }
+
+      .btn-primary:active {
+        opacity: 0.8;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .modal-reopened-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 1rem;
+        background-color: #f1f5f9;
+      }
+
+      .modal-reopened-state .btn-primary {
+        padding: 0.75rem 1.5rem;
+        font-size: 16px;
+      }
+
+      @media (max-width: 640px) {
         .modal {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 600px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px -2px rgba(50, 56, 62, 0.08), 0 20px 24px -4px rgba(50, 56, 62, 0.08);
-            overflow: hidden;
+          max-width: 100%;
         }
 
         .modal-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(97, 117, 134, 0.20);
-            box-shadow: 0 -1px 0 0 rgba(97, 117, 134, 0.20) inset;
-        }
-
-        .modal-title {
-            color: #0f172b;
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.66;
-            margin: 0;
-            padding: 0;
-        }
-
-        .modal-subtitle {
-            color: #45556c;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.42;
-            margin-top: 0.25rem;
-            padding: 0;
+          padding: 1rem;
         }
 
         .modal-content {
-            flex: 1;
-            padding: 1.25rem 1.5rem;
+          padding: 1rem;
         }
 
         .modal-body {
-            border: 1px solid #f1f5f9;
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .content-row {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .content-label {
-            width: 144px;
-            flex-shrink: 0;
-            color: #314158;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.42;
-            padding: 0;
-        }
-
-        .content-value {
-            flex: 1;
-            color: #0f172b;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.42;
-            white-space: pre-line;
-            word-break: break-word;
-            overflow-wrap: break-word;
+          padding: 0.75rem;
+          gap: 1rem;
         }
 
         .modal-footer {
-            padding: 0.875rem 1.5rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: #ffffff;
-            border-top: 1px solid #cad5e2;
+          padding: 0.75rem 1rem;
+          flex-wrap: wrap;
+        }
+
+        .content-row {
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        .content-label {
+          width: 100%;
+          margin-bottom: 0.25rem;
+        }
+
+        .content-value {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .modal-title {
+          font-size: 16px;
+        }
+
+        .modal-subtitle {
+          font-size: 12px;
+        }
+
+        .content-label,
+        .content-value {
+          font-size: 13px;
         }
 
         .btn {
-            min-height: 40px;
-            padding: 0.25rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1.42;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+          font-size: 13px;
+          min-height: 36px;
+          padding: 0.25rem 0.75rem;
         }
-
-        .btn-outlined {
-            border: 1px solid #cad5e2;
-            background-color: #ffffff;
-            color: #1d293d;
-        }
-
-        .btn-outlined:hover {
-            background-color: #f8fafc;
-        }
-
-        .btn-outlined:active {
-            background-color: #f1f5f9;
-        }
-
-        .btn-primary {
-            background-color: #1447e6;
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        .btn-primary:active {
-            opacity: 0.8;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .modal-reopened-state {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 1rem;
-            background-color: #f1f5f9;
-        }
-
-        .modal-reopened-state .btn-primary {
-            padding: 0.75rem 1.5rem;
-            font-size: 16px;
-        }
-
-        @media (max-width: 640px) {
-            .modal {
-                max-width: 100%;
-            }
-
-            .modal-header {
-                padding: 1rem;
-            }
-
-            .modal-content {
-                padding: 1rem;
-            }
-
-            .modal-body {
-                padding: 0.75rem;
-                gap: 1rem;
-            }
-
-            .modal-footer {
-                padding: 0.75rem 1rem;
-                flex-wrap: wrap;
-            }
-
-            .content-row {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-
-            .content-label {
-                width: 100%;
-                margin-bottom: 0.25rem;
-            }
-
-            .content-value {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .modal-title {
-                font-size: 16px;
-            }
-
-            .modal-subtitle {
-                font-size: 12px;
-            }
-
-            .content-label,
-            .content-value {
-                font-size: 13px;
-            }
-
-            .btn {
-                font-size: 13px;
-                min-height: 36px;
-                padding: 0.25rem 0.75rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="modal-container">
-        <div class="modal">
-            <!-- Header -->
-            <div class="modal-header">
-                <h1 class="modal-title">일정 생성 확인</h1>
-                <p class="modal-subtitle">다음 내용으로 일정을 생성하시겠습니까?</p>
-            </div>
-
-            <!-- Content -->
-            <div class="modal-content">
-                <div class="modal-body">
-                    <!-- Recipients -->
-                    <div class="content-row">
-                        <div class="content-label">받는 사람</div>
-                        <div class="content-value">박서준 &lt;seo-joon@itcen.com&gt;
-김유미 &lt;yumi@itcen.com&gt;</div>
-                    </div>
-
-                    <!-- Title -->
-                    <div class="content-row">
-                        <div class="content-label">제목</div>
-                        <div class="content-value">AgentGo 3.0 디자인 컨셉 리뷰 회의</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button class="btn btn-outlined" id="cancel-btn">취소</button>
-                <button class="btn btn-primary" id="create-btn">생성하기</button>
-            </div>
+      <div class="modal">
+        <!-- Header -->
+        <div class="modal-header">
+          <h1 class="modal-title">일정 생성 확인</h1>
+          <p class="modal-subtitle">다음 내용으로 일정을 생성하시겠습니까?</p>
         </div>
+
+        <!-- Content -->
+        <div class="modal-content">
+          <div class="modal-body">
+            <!-- Recipients -->
+            <div class="content-row">
+              <div class="content-label">받는 사람</div>
+              <div class="content-value">
+                박서준 &lt;seo-joon@itcen.com&gt; 김유미 &lt;yumi@itcen.com&gt;
+              </div>
+            </div>
+
+            <!-- Title -->
+            <div class="content-row">
+              <div class="content-label">제목</div>
+              <div class="content-value">AgentGo 3.0 디자인 컨셉 리뷰 회의</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+          <button class="btn btn-outlined" id="cancel-btn">취소</button>
+          <button class="btn btn-primary" id="create-btn">생성하기</button>
+        </div>
+      </div>
     </div>
 
     <script>
-        const modalContainer = document.getElementById('modal-container');
-        const cancelBtn = document.getElementById('cancel-btn');
-        const createBtn = document.getElementById('create-btn');
+      const modalContainer = document.getElementById("modal-container");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const createBtn = document.getElementById("create-btn");
 
-        cancelBtn.addEventListener('click', function() {
-            modalContainer.innerHTML = `
+      cancelBtn.addEventListener("click", function () {
+        modalContainer.innerHTML = `
                 <div style="text-align: center;">
                     <button class="btn btn-primary" id="reopen-btn" style="padding: 0.75rem 1.5rem; font-size: 16px;">
                         일정 생성 다이얼로그 열기
                     </button>
                 </div>
             `;
-            document.getElementById('reopen-btn').addEventListener('click', reopenModal);
-        });
+        document
+          .getElementById("reopen-btn")
+          .addEventListener("click", reopenModal);
+      });
 
-        createBtn.addEventListener('click', function() {
-            console.log('Creating schedule...');
-            modalContainer.innerHTML = `
+      createBtn.addEventListener("click", function () {
+        console.log("Creating schedule...");
+        modalContainer.innerHTML = `
                 <div style="text-align: center;">
                     <p style="color: #0f172b; font-size: 16px; margin-bottom: 1rem;">일정이 생성되었습니다!</p>
                     <button class="btn btn-primary" id="reopen-btn" style="padding: 0.75rem 1.5rem; font-size: 16px;">
@@ -295,11 +320,13 @@
                     </button>
                 </div>
             `;
-            document.getElementById('reopen-btn').addEventListener('click', reopenModal);
-        });
+        document
+          .getElementById("reopen-btn")
+          .addEventListener("click", reopenModal);
+      });
 
-        function reopenModal() {
-            modalContainer.innerHTML = `
+      function reopenModal() {
+        modalContainer.innerHTML = `
                 <div class="modal">
                     <div class="modal-header">
                         <h1 class="modal-title">일정 생성 확인</h1>
@@ -328,20 +355,26 @@
                 </div>
             `;
 
-            document.getElementById('cancel-btn').addEventListener('click', function() {
-                modalContainer.innerHTML = `
+        document
+          .getElementById("cancel-btn")
+          .addEventListener("click", function () {
+            modalContainer.innerHTML = `
                     <div style="text-align: center;">
                         <button class="btn btn-primary" id="reopen-btn" style="padding: 0.75rem 1.5rem; font-size: 16px;">
                             일정 생성 다이얼로그 열기
                         </button>
                     </div>
                 `;
-                document.getElementById('reopen-btn').addEventListener('click', reopenModal);
-            });
+            document
+              .getElementById("reopen-btn")
+              .addEventListener("click", reopenModal);
+          });
 
-            document.getElementById('create-btn').addEventListener('click', function() {
-                console.log('Creating schedule...');
-                modalContainer.innerHTML = `
+        document
+          .getElementById("create-btn")
+          .addEventListener("click", function () {
+            console.log("Creating schedule...");
+            modalContainer.innerHTML = `
                     <div style="text-align: center;">
                         <p style="color: #0f172b; font-size: 16px; margin-bottom: 1rem;">일정이 생성되었습니다!</p>
                         <button class="btn btn-primary" id="reopen-btn" style="padding: 0.75rem 1.5rem; font-size: 16px;">
@@ -349,9 +382,11 @@
                         </button>
                     </div>
                 `;
-                document.getElementById('reopen-btn').addEventListener('click', reopenModal);
-            });
-        }
+            document
+              .getElementById("reopen-btn")
+              .addEventListener("click", reopenModal);
+          });
+      }
     </script>
-</body>
+  </body>
 </html>
